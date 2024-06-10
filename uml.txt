@@ -1,0 +1,99 @@
+@startuml
+
+package view {
+    class MainView {
+        + main(args: String[]): void
+    }
+    class BookView {
+    }
+    class UserView {
+    }
+    class LoanView {
+    }
+    class LibraryView {
+    }
+}
+
+package service {
+    class Service {
+        + create(): BookEntity
+        + getOne(): BookEntity
+        + getMany(): BookEntity[]
+        + update(): BookEntity[]
+        + delete(): void
+    }
+}
+
+package dao {
+    class PersonDao {
+        + save(person: Person): void
+        + findByName(name: String): Person
+    }
+}
+
+package database {
+    interface DatabaseTableI<T extends Entity>{
+      +  save(T entity);
+      + Optional<T> findById(long id);
+      + List<T> findAll();
+      + void update(int id, T entity);
+      + void delete(int id);
+    }
+    class DatabaseTable implements DatabaseTableI {
+        nextId : int
+        data : List<T extends Entity>
+    }
+    class Database {
+      TODO
+      List<DatabaseTable>
+    }
+}
+
+package entity {
+class Entity {
+    - id: int
+    - equals(): boolean
+}
+
+class CustomerEntity extends Entity {
+    firstName: String
+    lastName: String
+    email: String
+    phoneNumber: String
+}
+
+class RentalEntity extends Entity {
+    startDate: Date
+    endDate: Date
+    amountPaid: double
+    vehicle: VehicleEntity
+    customer: CustomerEntity
+}
+
+class AgencyEntity extends Entity {
+    name: String
+    location: String
+    phoneNumber: String
+    rentals: List<RentalEntity>
+}
+
+class VehicleEntity extends Entity {
+    make: String
+    model: String
+    year: int
+    color: String
+}
+
+class MotorcycleEntity extends VehicleEntity {
+    engineSize: int
+    type: String
+}
+
+class CarEntity extends VehicleEntity {
+    numDoors: int
+    fuelType: String
+    transmissionType: String
+}
+}
+
+DatabaseTable <- Database

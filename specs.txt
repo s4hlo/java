@@ -1,0 +1,11 @@
+tables
+
+Entity {
+  Customer
+  Rental
+  Agency
+  Vehicle {
+    Motorcycle
+    Car
+  }
+}
