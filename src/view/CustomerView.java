@@ -20,7 +20,7 @@ public class CustomerView {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            scanner.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -63,7 +63,7 @@ public class CustomerView {
     private void viewCustomer() {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine(); 
         
         Optional<Customer> customer = customerService.getById(id);
         customer.ifPresentOrElse(
@@ -79,7 +79,7 @@ public class CustomerView {
     private void updateCustomer() {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine(); 
 
         Optional<Customer> optionalCustomer = customerService.getById(id);
         if (optionalCustomer.isPresent()) {
@@ -101,7 +101,7 @@ public class CustomerView {
     private void deleteCustomer() {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine(); 
 
         customerService.delete(id);
         System.out.println("Customer deleted successfully.");

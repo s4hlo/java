@@ -1,53 +1,49 @@
 @startuml
 
 package view {
-    class MainView {
+    class View {
         + startView(args: String[]): void
     }
-    class UserView {
-     + startView(args: String[]): void
+    class CustomerView extends View {
     }
-    class RentalView {
-     + startView(args: String[]): void
+    class RentalView extends View {
     }
-    class VehicleView {
-     + startView(args: String[]): void
+    class VehicleView  extends View {
     }
-    class AgencyView {
-     + startView(args: String[]): void
+    class AgencyView  extends View {
     }
 }
 
 package service {
     class CustomerService {
-        + create(): BookEntity
-        + getOne(): BookEntity
-        + getMany(): BookEntity[]
-        + update(): BookEntity[]
+        + add(): void
+        + getByid(): Optional<Customer>
+        + getAll(): List<Customer>
+        + update(): void
         + delete(): void
     }
     
     class RentalService {
-        + create(): BookEntity
-        + getOne(): BookEntity
-        + getMany(): BookEntity[]
-        + update(): BookEntity[]
+        + add(): void
+        + getByid(): Optional<Rental>
+        + getAll(): List<Rental>
+        + update(): void
         + delete(): void
     }
     
     class AgencyService {
-        + create(): BookEntity
-        + getOne(): BookEntity
-        + getMany(): BookEntity[]
-        + update(): BookEntity[]
+        + add(): void
+        + getByid(): Optional<Rental>
+        + getAll(): List<Rental>
+        + update(): void
         + delete(): void
     }
     
     class VehicleService {
-        + create(): BookEntity
-        + getOne(): BookEntity
-        + getMany(): BookEntity[]
-        + update(): BookEntity[]
+        + add(): void
+        + getByid(): Optional<Rental>
+        + getAll(): List<Rental>
+        + update(): void
         + delete(): void
     }
     
@@ -56,21 +52,25 @@ package service {
 package dao {
 
     class DAO {
-      void save(T entity);
-      Optional<T> findById(int id);
-      List<T> findAll();
-      List<T> findAll(Predicate<T> filter);
-      List<T> findAll(Comparator<T> comparator);
-      void update(int id, T entity);
-      void delete(int id);
+      + void save(T entity);
+      + Optional<T> findById(int id);
+      + List<T> findAll();
+      + List<T> findAll(Predicate<T> filter);
+      + List<T> findAll(Comparator<T> comparator);
+      + void update(int id, T entity);
+      + void delete(int id);
     }
     class CustomerDAO implements DAO {
+     - table: DatabaseTable<Customer>
     }
-    class Vehicl~~~~~~~eDAO implements DAO {
+    class VehicleDAO implements DAO {
+     - table: DatabaseTable<Vehicle>
     }
     class RentalDAO implements DAO {
+     - table: DatabaseTable<Rental>
     }
     class AgencyDAO implements DAO {
+     - table: DatabaseTable<Agency>
     }
 }
 
@@ -83,65 +83,61 @@ package database {
       + void delete(int id);
     }
     class DatabaseTable implements DatabaseTableI {
-        nextId : int
-        data : List<T extends Entity>
+        - nextId : int
+        - entities : Map<Integer, T> 
     }
     class Database {
-      TODO
-      List<DatabaseTable>
-      Database
-      getInstance
+      - tables: Map<Class<? extends Entity>, DatabaseTable<? extends Entity>>
+      - instance: Database
+      + getInstance: Database
     }
 }
 
 package entity {
 class Entity {
-    int id;
-    boolean equals(Object obj);
+    - int id;
+    + boolean equals(Object obj);
 }
 
 class Customer extends Entity {
-    String firstName;
-    String lastName;
-    String email;
-    String phoneNumber;
+    - String name;
+    - String email;
 }
 
 class Rental extends Entity {
-    Date startDate;
-    Date endDate;
-    double amountPaid;
-    Date returnedDate;
-    VehicleEntity vehicle;
-    CustomerEntity customer;
+    - Date startDate;
+    - Date endDate;
+    - double amountPaid;
+    - Date returnedDate;
+    - VehicleEntity vehicle;
+    - CustomerEntity customer;
 }
 
 class Agency extends Entity {
-    String name;
-    String location;
-    String phoneNumber;
+    - String name;
+    - String location;
+    - String phoneNumber;
 }
 
 class Vehicle extends Entity {
-    String make;
-    String model;
-    int year;
-    String color;
-    String licensePlate;
-    double rentalPricePerDay;
-    boolean isAvailable;
-    String fuelType;
+    - String make;
+    - String model;
+    - int year;
+    - String color;
+    - double rentalPricePerDay;
+    - boolean isAvailable;
+    - String fuelType;
 }
 
 class Motorcycle extends Vehicle {
-    int engineSize;
-    String type;
+    - int engineSize;
+    - String type;
 }
 
 class Car extends Vehicle {
-    int numDoors;
-    String transmissionType;
-    boolean hasAirConditioning;
+    - int numDoors;
+    - String transmissionType;
+    - boolean hasAirConditioning;
 }
 }
 
@@ -150,10 +146,14 @@ Customer <- Rental
 Vehicle <- Rental
 Vehicle -> Agency
 
-VehicleView <- MainView
-AgencyView <- MainView
-UserView <- MainView
-RentalView <- MainView
+CustomerView -> CustomerService
+CustomerService -> CustomerDAO
+CustomerDAO -> DatabaseTable
+
+RentalView -> RentalService
+RentalService -> RentalDAO
+RentalDAO -> DatabaseTable
+
 
 
 
