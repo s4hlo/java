@@ -9,3 +9,13 @@ Entity {
     Car
   }
 }
+
+- Adicionar relacionamento entre classes de diferentes pacotes
+
+- Consertar seta na relação de composição entre Database e DatabaseTable (pode ser entre Database e DatabaseTableI na verdade)
+
+- Renomear e criar novos serviços para lidar com as diferentes funcionalidades do sistema. Pode ser criado um serviço por entidade (por exemplo CostumerService para buscar, listar, alterar informações de um Costumer)
+
+- Adicionar modificadores de acesso aos atributose métodos (+ para público, # para protegido, - para privado)
+
+- A relação entre Agency e Vehicle pode se inverter - Angency possui uma lista (pode ser uma relação de agregação) de Vehicle.

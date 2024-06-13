@@ -2,32 +2,75 @@
 
 package view {
     class MainView {
-        + main(args: String[]): void
-    }
-    class BookView {
+        + startView(args: String[]): void
     }
     class UserView {
+     + startView(args: String[]): void
     }
-    class LoanView {
+    class RentalView {
+     + startView(args: String[]): void
     }
-    class LibraryView {
+    class VehicleView {
+     + startView(args: String[]): void
+    }
+    class AgencyView {
+     + startView(args: String[]): void
     }
 }
 
 package service {
-    class Service {
+    class CustomerService {
         + create(): BookEntity
         + getOne(): BookEntity
         + getMany(): BookEntity[]
         + update(): BookEntity[]
         + delete(): void
     }
+    
+    class RentalService {
+        + create(): BookEntity
+        + getOne(): BookEntity
+        + getMany(): BookEntity[]
+        + update(): BookEntity[]
+        + delete(): void
+    }
+    
+    class AgencyService {
+        + create(): BookEntity
+        + getOne(): BookEntity
+        + getMany(): BookEntity[]
+        + update(): BookEntity[]
+        + delete(): void
+    }
+    
+    class VehicleService {
+        + create(): BookEntity
+        + getOne(): BookEntity
+        + getMany(): BookEntity[]
+        + update(): BookEntity[]
+        + delete(): void
+    }
+    
 }
 
 package dao {
-    class PersonDao {
-        + save(person: Person): void
-        + findByName(name: String): Person
+
+    class DAO {
+      void save(T entity);
+      Optional<T> findById(int id);
+      List<T> findAll();
+      List<T> findAll(Predicate<T> filter);
+      List<T> findAll(Comparator<T> comparator);
+      void update(int id, T entity);
+      void delete(int id);
+    }
+    class CustomerDAO implements DAO {
+    }
+    class Vehicl~~~~~~~eDAO implements DAO {
+    }
+    class RentalDAO implements DAO {
+    }
+    class AgencyDAO implements DAO {
     }
 }
 
@@ -46,54 +89,72 @@ package database {
     class Database {
       TODO
       List<DatabaseTable>
+      Database
+      getInstance
     }
 }
 
 package entity {
 class Entity {
-    - id: int
-    - equals(): boolean
+    int id;
+    boolean equals(Object obj);
 }
 
-class CustomerEntity extends Entity {
-    firstName: String
-    lastName: String
-    email: String
-    phoneNumber: String
+class Customer extends Entity {
+    String firstName;
+    String lastName;
+    String email;
+    String phoneNumber;
 }
 
-class RentalEntity extends Entity {
-    startDate: Date
-    endDate: Date
-    amountPaid: double
-    vehicle: VehicleEntity
-    customer: CustomerEntity
+class Rental extends Entity {
+    Date startDate;
+    Date endDate;
+    double amountPaid;
+    Date returnedDate;
+    VehicleEntity vehicle;
+    CustomerEntity customer;
 }
 
-class AgencyEntity extends Entity {
-    name: String
-    location: String
-    phoneNumber: String
-    rentals: List<RentalEntity>
+class Agency extends Entity {
+    String name;
+    String location;
+    String phoneNumber;
 }
 
-class VehicleEntity extends Entity {
-    make: String
-    model: String
-    year: int
-    color: String
+class Vehicle extends Entity {
+    String make;
+    String model;
+    int year;
+    String color;
+    String licensePlate;
+    double rentalPricePerDay;
+    boolean isAvailable;
+    String fuelType;
 }
 
-class MotorcycleEntity extends VehicleEntity {
-    engineSize: int
-    type: String
+class Motorcycle extends Vehicle {
+    int engineSize;
+    String type;
 }
 
-class CarEntity extends VehicleEntity {
-    numDoors: int
-    fuelType: String
-    transmissionType: String
+class Car extends Vehicle {
+    int numDoors;
+    String transmissionType;
+    boolean hasAirConditioning;
 }
 }
 
 DatabaseTable <- Database
+Customer <- Rental
+Vehicle <- Rental
+Vehicle -> Agency
+
+VehicleView <- MainView
+AgencyView <- MainView
+UserView <- MainView
+RentalView <- MainView
+
+
+
+
