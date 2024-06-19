@@ -107,8 +107,5 @@ public class CustomerView {
         System.out.println("Customer deleted successfully.");
     }
 
-    public static void main(String[] args) {
-        CustomerView view = new CustomerView();
-        view.showMenu();
-    }
+    
 }
