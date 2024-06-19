@@ -23,9 +23,9 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   public Optional<T> findById(int id) {
     if (!entities.containsKey(id)) {
       System.out.println("Entity with ID " + id + " not found.");
-      return Optional.empty(); // Return Optional.empty() when entity is not found
+      return Optional.empty();
     }
-    return Optional.of(entities.get(id)); // Return Optional of the found entity
+    return Optional.of(entities.get(id));
   }
 
   @Override
@@ -37,7 +37,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   public void update(int id, T entity) {
     if (!entities.containsKey(id)) {
       System.out.println("Entity with ID " + id + " not found, cannot update.");
-      return; // or throw an appropriate exception if desired
+      return;
     }
     entity.setId(id);
     entities.put(id, entity);
@@ -47,7 +47,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   public void delete(int id) {
     if (!entities.containsKey(id)) {
       System.out.println("Entity with ID " + id + " not found, cannot delete.");
-      return; // or throw an appropriate exception if desired
+      return;
     }
     entities.remove(id);
   }

@@ -13,6 +13,8 @@ import dao.DAO;
 public class CustomerDAO implements DAO<Customer> {
   private DatabaseTable<Customer> table;
 
+  private Database database = Database.getInstance();
+
   public CustomerDAO() {
     Database database = Database.getInstance();
     table = database.getTable(Customer.class);
@@ -36,19 +38,13 @@ public class CustomerDAO implements DAO<Customer> {
   public List<Customer> findAll() {
     return table.findAll();
   }
-  //
+
   // @Override
   // public List<Customer> findAll(Predicate<Customer> filter) {
-  //   // Implementing findAll with Predicate is not provided by DatabaseTable,
-  //   // you may need to enhance DatabaseTable to support filtering.
-  //   throw new UnsupportedOperationException("Method not supported by DatabaseTable");
   // }
   //
   // @Override
   // public List<Customer> findAll(Comparator<Customer> comparator) {
-  //   // Implementing findAll with Comparator is not provided by DatabaseTable,
-  //   // you may need to enhance DatabaseTable to support sorting.
-  //   throw new UnsupportedOperationException("Method not supported by DatabaseTable");
   // }
 
   @Override

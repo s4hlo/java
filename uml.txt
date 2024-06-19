@@ -1,4 +1,5 @@
 @startuml
+!theme carbon-gray
 
 package view {
     class View {
@@ -154,7 +155,11 @@ RentalView -> RentalService
 RentalService -> RentalDAO
 RentalDAO -> DatabaseTable
 
+VehicleView -> VehicleService
+VehicleService -> VehicleDAO
+VehicleDAO -> DatabaseTable
 
-
-
+AgencyView -> AgencyService
+AgencyService -> AgencyDAO
+AgencyDAO -> DatabaseTable
 

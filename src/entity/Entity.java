@@ -7,7 +7,6 @@ public class Entity {
         this.id = id;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -16,7 +15,6 @@ public class Entity {
         this.id = id;
     }
 
-  // overide equals to check only id
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
