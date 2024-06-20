@@ -8,17 +8,38 @@ public class Rental extends Entity {
   private Date endDate;
   private double amountPaid;
   private Optional<Date> returnDate;
-  private Customer customer;
-  private Vehicle vehicle;
+  private int customerId;
+  private int vehicleId;
 
-  public Rental(int id, Date startDate, Date endDate, double amountPaid, Customer customer, Vehicle vehicle) {
-    super(id);
+  // placeholder
+  private Optional<Customer> customer;
+  private Optional<Vehicle> vehicle;
+
+  public Rental(Date startDate, Date endDate, double amountPaid, int customerId, int vehicleId) {
+    super(0);
     this.startDate = startDate;
     this.endDate = endDate;
     this.amountPaid = amountPaid;
     this.returnDate = Optional.empty();
-    this.customer = customer;
-    this.vehicle = vehicle;
+    this.customerId = customerId;
+    this.vehicleId = vehicleId;
+
+  }
+
+  public Optional<Customer> getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = Optional.of(customer);
+  }
+
+  public Optional<Vehicle> getVehicle() {
+    return vehicle;
+  }
+
+  public void setVehicle(Vehicle vehicle) {
+    this.vehicle = Optional.of(vehicle);
   }
 
   public Date getStartDate() {
@@ -53,20 +74,20 @@ public class Rental extends Entity {
     this.returnDate = Optional.of(returnDate);
   }
 
-  public Customer getCustomer() {
-    return customer;
+  public int getCustomerId() {
+    return customerId;
   }
 
-  public void setCustomer(Customer customer) {
-    this.customer = customer;
+  public void setCustomer(int customerId) {
+    this.customerId = customerId;
   }
 
-  public Vehicle getVehicle() {
-    return vehicle;
+  public int getVehicleId() {
+    return vehicleId;
   }
 
-  public void setVehicle(Vehicle vehicle) {
-    this.vehicle = vehicle;
+  public void setVehicleId(int vehicle) {
+    this.vehicleId = vehicle;
   }
 
   @Override
@@ -76,8 +97,10 @@ public class Rental extends Entity {
         ", endDate=" + endDate +
         ", amountPaid=" + amountPaid +
         ", returnDate=" + returnDate +
-        ", customer= { " + customer +
-        " }, vehicle= { " + vehicle +
+        ", customerId=" + customerId +
+        ", vehicleId=" + vehicleId +
+        ", customer=" + customer +
+        ", vehicle=" + vehicle +
         '}';
   }
 }

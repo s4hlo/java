@@ -1,4 +1,5 @@
 import view.CustomerView;
+import view.RentalView;
 import view.VehicleView;
 import java.util.Scanner;
 
@@ -9,7 +10,8 @@ public class Main {
       System.out.println("=== Main Menu ===");
       System.out.println("1. Customer View");
       System.out.println("2. Vehicle View");
-      System.out.println("3. Exit");
+      System.out.println("3. Rental View");
+      System.out.println("4. Exit");
       System.out.print("Enter your choice: ");
 
       int choice = scanner.nextInt();
@@ -25,7 +27,13 @@ public class Main {
           vehicleView.startView();
           break;
         case 3:
+          RentalView rentalView = new RentalView();
+          rentalView.startView();
+          break;
+
+        case 4:
           System.out.println("Exiting program...");
+          scanner.close();
           System.exit(0);
         default:
           System.out.println("Invalid choice. Please enter a valid option.");
