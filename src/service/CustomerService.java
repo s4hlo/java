@@ -5,7 +5,6 @@ import entity.Customer;
 
 import java.util.List;
 import java.util.Optional;
-import dao.CustomerDAO;
 
 public class CustomerService {
   private CustomerDAO customerDao = new CustomerDAO();

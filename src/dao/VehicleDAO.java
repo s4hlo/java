@@ -1,16 +1,11 @@
 package dao;
 
-import entity.Entity;
 import entity.Vehicle;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.function.Predicate;
-import java.util.Comparator;
 import database.Database;
-import database.DatabaseTable;
-import dao.DAO;
 import java.util.stream.Collectors;
 
 public class VehicleDAO implements DAO<Vehicle> {
