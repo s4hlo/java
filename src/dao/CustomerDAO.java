@@ -6,9 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.function.Predicate;
+import java.util.Comparator;
 import database.Database;
 import database.DatabaseTable;
 import dao.DAO;
+import java.util.stream.Collectors;
 
 public class CustomerDAO implements DAO<Customer> {
   private Database database;
@@ -42,13 +45,22 @@ public class CustomerDAO implements DAO<Customer> {
     database.delete(Customer.class, id);
   }
 
+  @Override
+  public List<Customer> findAll(Predicate<Customer> filter) {
+    List<Customer> allCustomers = database.findAll(Customer.class);
 
-  // @Override
-  // public List<Customer> findAll(Predicate<Customer> filter) {
-  // }
-  //
-  // @Override
-  // public List<Customer> findAll(Comparator<Customer> comparator) {
-  // }
+    return allCustomers.stream()
+        .filter(filter)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Customer> findAll(Comparator<Customer> comparator) {
+    List<Customer> allCustomers = database.findAll(Customer.class);
+
+    allCustomers.sort(comparator);
+
+    return allCustomers;
+  }
 
 }
