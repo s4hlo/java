@@ -22,6 +22,15 @@ public class CustomerService {
     return customerDao.findAll(customer -> customer.getAge() > 30);
   }
 
+  public List<Customer> getSortedCustomers() {
+    return customerDao.findAll((c1, c2) -> c1.getName().compareTo(c2.getName()));
+  }
+
+  public List<Customer> getSortedCustomersByAge() {
+    return customerDao.findAll((c1, c2) -> c1.getAge() - c2.getAge());
+  }
+
+
   public List<Customer> getAll() {
     return customerDao.findAll();
   }
