@@ -43,7 +43,7 @@ public class RentalService {
   }
 
   public List<Rental> getAllPendingRentals () {
-    return rentalDao.findAll(rental -> rental.getReturnDate() == null);
+    return rentalDao.findAll(rental -> !rental.getReturnDate().isPresent());
   }
 
   public List<Rental> getAll() {
