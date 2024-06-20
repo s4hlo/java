@@ -11,33 +11,37 @@ import database.DatabaseTable;
 import dao.DAO;
 
 public class CustomerDAO implements DAO<Customer> {
-  private DatabaseTable<Customer> table;
-
-  private Database database = Database.getInstance();
+  private Database database;
 
   public CustomerDAO() {
-    Database database = Database.getInstance();
-    table = database.getTable(Customer.class);
-    if (table == null) {
-      table = new DatabaseTable<>();
-      database.addTable(Customer.class, table);
-    }
+    database = Database.getInstance();
   }
 
   @Override
   public void save(Customer entity) {
-    table.save(entity);
+    database.save(Customer.class, entity);
   }
 
   @Override
   public Optional<Customer> findById(int id) {
-    return table.findById(id);
+    return database.findById(Customer.class, id);
   }
 
   @Override
   public List<Customer> findAll() {
-    return table.findAll();
+    return database.findAll(Customer.class);
   }
+
+  @Override
+  public void update(int id, Customer entity) {
+    database.update(Customer.class, id, entity);
+  }
+
+  @Override
+  public void delete(int id) {
+    database.delete(Customer.class, id);
+  }
+
 
   // @Override
   // public List<Customer> findAll(Predicate<Customer> filter) {
@@ -47,13 +51,4 @@ public class CustomerDAO implements DAO<Customer> {
   // public List<Customer> findAll(Comparator<Customer> comparator) {
   // }
 
-  @Override
-  public void update(int id, Customer entity) {
-    table.update(id, entity);
-  }
-
-  @Override
-  public void delete(int id) {
-    table.delete(id);
-  }
 }
