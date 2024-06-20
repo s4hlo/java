@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import entity.Entity;
+import exception.EntityNotFoundException;
 
 public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   private Map<Integer, T> entities = new HashMap<>();
@@ -21,11 +22,11 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
 
   @Override
   public Optional<T> findById(int id) {
-    if (!entities.containsKey(id)) {
-      System.out.println("Entity with ID " + id + " not found.");
-      return Optional.empty();
+    T entity = entities.get(id);
+    if (entity == null) {
+      throw new EntityNotFoundException("Entity with ID " + id + " not found.");
     }
-    return Optional.of(entities.get(id));
+    return Optional.of(entity);
   }
 
   @Override
@@ -36,8 +37,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   @Override
   public void update(int id, T entity) {
     if (!entities.containsKey(id)) {
-      System.out.println("Entity with ID " + id + " not found, cannot update.");
-      return;
+      throw new EntityNotFoundException("Entity with ID " + id + " not found, cannot update.");
     }
     entity.setId(id);
     entities.put(id, entity);
@@ -46,8 +46,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
   @Override
   public void delete(int id) {
     if (!entities.containsKey(id)) {
-      System.out.println("Entity with ID " + id + " not found, cannot delete.");
-      return;
+      throw new EntityNotFoundException("Entity with ID " + id + " not found, cannot delete.");
     }
     entities.remove(id);
   }

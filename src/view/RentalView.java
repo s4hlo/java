@@ -140,8 +140,12 @@ public class RentalView implements View {
     int id = scanner.nextInt();
     scanner.nextLine();
 
-    rentalService.delete(id);
-    System.out.println("Rental deleted successfully.");
+    try {
+      rentalService.delete(id);
+      System.out.println("Rental deleted successfully.");
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
 }
