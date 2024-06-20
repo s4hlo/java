@@ -12,13 +12,15 @@ public class CustomerView implements View {
 
   public void startView() {
     while (true) {
+      System.out.println("=== Customer Menu ===");
       System.out.println("1. Add Customer");
       System.out.println("2. View Customer");
       System.out.println("3. View All Customers");
       System.out.println("4. Update Customer");
       System.out.println("5. Delete Customer");
-      System.out.println("6. Exit");
+      System.out.println("6. Back to Main Menu");
       System.out.print("Enter your choice: ");
+
       int choice = scanner.nextInt();
       scanner.nextLine();
 
@@ -39,7 +41,7 @@ public class CustomerView implements View {
           deleteCustomer();
           break;
         case 6:
-          System.exit(0);
+          return; // Return to main menu
         default:
           System.out.println("Invalid choice. Try again.");
       }

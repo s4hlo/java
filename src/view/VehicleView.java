@@ -13,12 +13,13 @@ public class VehicleView implements View {
 
   public void startView() {
     while (true) {
+      System.out.println("=== Vehicle Menu ===");
       System.out.println("1. Add Vehicle");
       System.out.println("2. View Vehicle");
       System.out.println("3. View All Vehicles");
       System.out.println("4. Update Vehicle");
       System.out.println("5. Delete Vehicle");
-      System.out.println("6. Exit");
+      System.out.println("6. Back to Main Menu");
       System.out.print("Enter your choice: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -40,7 +41,7 @@ public class VehicleView implements View {
           deleteVehicle();
           break;
         case 6:
-          System.exit(0);
+          return;
         default:
           System.out.println("Invalid choice. Try again.");
       }
@@ -52,7 +53,7 @@ public class VehicleView implements View {
     String model = scanner.nextLine();
     System.out.print("Year:");
     int year = scanner.nextInt();
-    scanner.nextLine(); 
+    scanner.nextLine();
     System.out.print("Color:");
     String color = scanner.nextLine();
     System.out.print("FuelType:");
