@@ -52,6 +52,7 @@ public class VehicleView implements View {
     String model = scanner.nextLine();
     System.out.print("Year:");
     int year = scanner.nextInt();
+    scanner.nextLine(); 
     System.out.print("Color:");
     String color = scanner.nextLine();
     System.out.print("FuelType:");
