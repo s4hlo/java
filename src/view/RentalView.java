@@ -1,6 +1,7 @@
 package view;
 
 import entity.Rental;
+import exception.EntityNotFoundException;
 import service.RentalService;
 
 import java.sql.Date;
@@ -61,44 +62,62 @@ public class RentalView implements View {
   }
 
   private void returnVehicleInRental() {
-    System.out.print("Enter Rental ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-    System.out.print("Enter Return Date or press enter to use current date: ");
-    String input = scanner.nextLine();
-    Date returnDate = input.isEmpty() ? new Date(System.currentTimeMillis()) : Date.valueOf(input);
-    rentalService.returnVehicle(id, returnDate);
-    System.out.println("Vehicle returned successfully.");
+    try {
+      System.out.print("Enter Rental ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
+      System.out.print("Enter Return Date or press enter to use current date: ");
+      String input = scanner.nextLine();
+      Date returnDate = input.isEmpty() ? new Date(System.currentTimeMillis()) : Date.valueOf(input);
+      rentalService.returnVehicle(id, returnDate);
+      System.out.println("Vehicle returned successfully.");
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
   private void addRental() {
-    System.out.print("Enter Rental StarDate: ");
-    // the format should be yyyy-mm-dd
-    Date startDate = Date.valueOf(scanner.nextLine());
-    System.out.print("Enter Rental EndDate: ");
-    // the format should be yyyy-mm-dd
-    Date endDate = Date.valueOf(scanner.nextLine());
-    System.out.print("Enter Rental Customer ID: ");
-    int customerId = scanner.nextInt();
-    scanner.nextLine();
-    System.out.print("Enter Rental Vehicle ID: ");
-    int vehicleId = scanner.nextInt();
-    scanner.nextLine();
-
-    Rental rental = new Rental(startDate, endDate, customerId, vehicleId);
-    rentalService.add(rental);
-    System.out.println("Rental added successfully.");
+    try {
+      System.out.print("Enter Rental StarDate: ");
+      // the format should be yyyy-mm-dd
+      Date startDate = Date.valueOf(scanner.nextLine());
+      System.out.print("Enter Rental EndDate: ");
+      // the format should be yyyy-mm-dd
+      Date endDate = Date.valueOf(scanner.nextLine());
+      System.out.print("Enter Rental Customer ID: ");
+      int customerId = scanner.nextInt();
+      scanner.nextLine();
+      System.out.print("Enter Rental Vehicle ID: ");
+      int vehicleId = scanner.nextInt();
+      scanner.nextLine();
+  
+      Rental rental = new Rental(startDate, endDate, customerId, vehicleId);
+      rentalService.add(rental);
+      System.out.println("Rental added successfully.");
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
   private void viewRental() {
-    System.out.print("Enter Rental ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    Optional<Rental> rental = rentalService.getById(id);
-    rental.ifPresentOrElse(
-        System.out::println,
-        () -> System.out.println("Rental not found."));
+    try {
+      System.out.print("Enter Rental ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
+  
+      Optional<Rental> rental = rentalService.getById(id);
+      rental.ifPresentOrElse(
+          System.out::println,
+          () -> System.out.println("Rental not found."));
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
   private void viewAllRentals() {
@@ -106,32 +125,38 @@ public class RentalView implements View {
   }
 
   private void updateRental() {
-    System.out.print("Enter Rental ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    Optional<Rental> optionalRental = rentalService.getById(id);
-    if (optionalRental.isPresent()) {
-      Rental rental = optionalRental.get();
-
-      System.out.print("Enter new start date (current: " + rental.getStartDate() + "): ");
-      Date startDate = Date.valueOf(scanner.nextLine());
-      // if (!startDate.isEmpty()) {
-      //   rental.setStartDate(Date.valueOf(startDate));
-      // }
-      System.out.print("Enter new end date (current: " + rental.getEndDate() + "): ");
-      Date endDate = Date.valueOf(scanner.nextLine());
-      System.out.print("Enter new amount paid (current: " + rental.getAmountPaid() + "): ");
-      double amountPaid = scanner.nextDouble();
+    try {
+      System.out.print("Enter Rental ID: ");
+      int id = scanner.nextInt();
       scanner.nextLine();
-
-      rental.setStartDate(startDate);
-      rental.setEndDate(endDate);
-      rental.setAmountPaid(amountPaid);
-      rentalService.update(id, rental);
-      System.out.println("Rental updated successfully.");
-    } else {
-      System.out.println("Rental not found.");
+  
+      Optional<Rental> optionalRental = rentalService.getById(id);
+      if (optionalRental.isPresent()) {
+        Rental rental = optionalRental.get();
+  
+        System.out.print("Enter new start date (current: " + rental.getStartDate() + "): ");
+        Date startDate = Date.valueOf(scanner.nextLine());
+        // if (!startDate.isEmpty()) {
+        //   rental.setStartDate(Date.valueOf(startDate));
+        // }
+        System.out.print("Enter new end date (current: " + rental.getEndDate() + "): ");
+        Date endDate = Date.valueOf(scanner.nextLine());
+        System.out.print("Enter new amount paid (current: " + rental.getAmountPaid() + "): ");
+        double amountPaid = scanner.nextDouble();
+        scanner.nextLine();
+  
+        rental.setStartDate(startDate);
+        rental.setEndDate(endDate);
+        rental.setAmountPaid(amountPaid);
+        rentalService.update(id, rental);
+        System.out.println("Rental updated successfully.");
+      } else {
+        System.out.println("Rental not found.");
+      }
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
@@ -143,6 +168,8 @@ public class RentalView implements View {
     try {
       rentalService.delete(id);
       System.out.println("Rental deleted successfully.");
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

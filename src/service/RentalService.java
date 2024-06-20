@@ -4,6 +4,8 @@ import dao.RentalDAO;
 import entity.Customer;
 import entity.Rental;
 import entity.Vehicle;
+import exception.InvalidRentalEndDateException;
+import exception.InvalidRentalReturnDateException;
 
 import java.sql.Date;
 import java.util.List;
@@ -21,6 +23,11 @@ public class RentalService {
     if (vehicle.isPresent()) {
       vehicle.get().setAvailable(false);
       vehicleService.update(vehicle.get().getId(), vehicle.get());
+
+      if (rental.getEndDate().getTime() < rental.getStartDate().getTime()) {
+        throw new InvalidRentalEndDateException("Invalid rental end date.");
+      }
+
       int days = (int) ((rental.getEndDate().getTime() - rental.getStartDate().getTime()) / (1000 * 60 * 60 * 24));
       double amountToPay = vehicleService.calculatePriceInDays(vehicle.get().getId(), days);
       rental.setAmountPaid(amountToPay);
@@ -38,6 +45,10 @@ public class RentalService {
     Optional<Rental> rental = rentalDao.findById(id);
 
     if (rental.isPresent()) {
+      if (returnDate.getTime() < rental.get().getStartDate().getTime()) {
+        throw new InvalidRentalReturnDateException("Invalid rental return date.");
+      }
+
       // Update the vehicle to be available only if vehicle is present
       if (rental.get().getVehicle().isPresent()) {
         Vehicle vehicle = rental.get().getVehicle().get();

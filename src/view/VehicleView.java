@@ -3,6 +3,7 @@ package view;
 import entity.Car;
 import entity.Motorcycle;
 import entity.Vehicle;
+import exception.EntityNotFoundException;
 import service.VehicleService;
 
 import java.util.Optional;
@@ -58,7 +59,7 @@ public class VehicleView implements View {
   }
 
   private void addVehicle() {
-    //ask the user if they want to add a car or a motorcycle
+    // ask the user if they want to add a car or a motorcycle
     System.out.println("What type of vehicle do you want to add?");
     System.out.println("1. Car");
     System.out.println("2. Motorcycle");
@@ -131,14 +132,20 @@ public class VehicleView implements View {
   }
 
   private void viewVehicle() {
-    System.out.print("Enter Vehicle ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
+    try {
+      System.out.print("Enter Vehicle ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
 
-    Optional<Vehicle> vehicle = vehicleService.getById(id);
-    vehicle.ifPresentOrElse(
-        System.out::println,
-        () -> System.out.println("Vehicle not found."));
+      Optional<Vehicle> vehicle = vehicleService.getById(id);
+      vehicle.ifPresentOrElse(
+          System.out::println,
+          () -> System.out.println("Vehicle not found."));
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
   private void viewAllVehicles() {
@@ -146,45 +153,57 @@ public class VehicleView implements View {
   }
 
   private void updateVehicle() {
-    System.out.print("Enter Vehicle ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    Optional<Vehicle> optionalVehicle = vehicleService.getById(id);
-    if (optionalVehicle.isPresent()) {
-      Vehicle vehicle = optionalVehicle.get();
-      System.out.print("Enter new Model (current: " + vehicle.getModel() + "): ");
-      String model = scanner.nextLine();
-      System.out.print("Enter new year (current: " + vehicle.getYear() + "): ");
-      int year = scanner.nextInt();
+    try {
+      System.out.print("Enter Vehicle ID: ");
+      int id = scanner.nextInt();
       scanner.nextLine();
-      System.out.print("Enter new color (current: " + vehicle.getColor() + "): ");
-      String color = scanner.nextLine();
-      System.out.print("Enter new rental price per day (current: " + vehicle.getRentalPricePerDay() + "): ");
-      double rentalPricePerDay = scanner.nextDouble();
-      scanner.nextLine();
-      System.out.print("Enter new fuel type (current: " + vehicle.getFuelType() + "): ");
-      String fuelType = scanner.nextLine();
-
-      vehicle.setModel(model);
-      vehicle.setYear(year);
-      vehicle.setColor(color);
-      vehicle.setRentalPricePerDay(rentalPricePerDay);
-      vehicle.setFuelType(fuelType);
-      vehicleService.update(id, vehicle);
-      System.out.println("Vehicle updated successfully.");
-    } else {
-      System.out.println("Vehicle not found.");
+  
+      Optional<Vehicle> optionalVehicle = vehicleService.getById(id);
+      if (optionalVehicle.isPresent()) {
+        Vehicle vehicle = optionalVehicle.get();
+        System.out.print("Enter new Model (current: " + vehicle.getModel() + "): ");
+        String model = scanner.nextLine();
+        System.out.print("Enter new year (current: " + vehicle.getYear() + "): ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter new color (current: " + vehicle.getColor() + "): ");
+        String color = scanner.nextLine();
+        System.out.print("Enter new rental price per day (current: " + vehicle.getRentalPricePerDay() + "): ");
+        double rentalPricePerDay = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Enter new fuel type (current: " + vehicle.getFuelType() + "): ");
+        String fuelType = scanner.nextLine();
+  
+        vehicle.setModel(model);
+        vehicle.setYear(year);
+        vehicle.setColor(color);
+        vehicle.setRentalPricePerDay(rentalPricePerDay);
+        vehicle.setFuelType(fuelType);
+        vehicleService.update(id, vehicle);
+        System.out.println("Vehicle updated successfully.");
+      } else {
+        System.out.println("Vehicle not found.");
+      }
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
   private void deleteVehicle() {
-    System.out.print("Enter Vehicle ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    vehicleService.delete(id);
-    System.out.println("Vehicle deleted successfully.");
+    try {
+      System.out.print("Enter Vehicle ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
+  
+      vehicleService.delete(id);
+      System.out.println("Vehicle deleted successfully.");
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
 }

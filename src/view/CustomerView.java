@@ -1,6 +1,7 @@
 package view;
 
 import entity.Customer;
+import exception.EntityNotFoundException;
 import service.CustomerService;
 
 import java.util.Optional;
@@ -62,14 +63,20 @@ public class CustomerView implements View {
   }
 
   private void viewCustomer() {
-    System.out.print("Enter Customer ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
+    try {
+      System.out.print("Enter Customer ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
 
-    Optional<Customer> customer = customerService.getById(id);
-    customer.ifPresentOrElse(
-        System.out::println,
-        () -> System.out.println("Customer not found."));
+      Optional<Customer> customer = customerService.getById(id);
+      customer.ifPresentOrElse(
+          System.out::println,
+          () -> System.out.println("Customer not found."));
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
   private void viewAllCustomers() {
@@ -77,37 +84,49 @@ public class CustomerView implements View {
   }
 
   private void updateCustomer() {
-    System.out.print("Enter Customer ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
+    try {
+      System.out.print("Enter Customer ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
 
-    Optional<Customer> optionalCustomer = customerService.getById(id);
-    if (optionalCustomer.isPresent()) {
-      Customer customer = optionalCustomer.get();
-      System.out.print("Enter new name (current: " + customer.getName() + "): ");
-      String name = scanner.nextLine();
-      System.out.print("Enter new email (current: " + customer.getEmail() + "): ");
-      String email = scanner.nextLine();
-      System.out.print("Enter new age (current: " + customer.getAge() + "): ");
-      int age = scanner.nextInt();
+      Optional<Customer> optionalCustomer = customerService.getById(id);
+      if (optionalCustomer.isPresent()) {
+        Customer customer = optionalCustomer.get();
+        System.out.print("Enter new name (current: " + customer.getName() + "): ");
+        String name = scanner.nextLine();
+        System.out.print("Enter new email (current: " + customer.getEmail() + "): ");
+        String email = scanner.nextLine();
+        System.out.print("Enter new age (current: " + customer.getAge() + "): ");
+        int age = scanner.nextInt();
 
-      customer.setName(name);
-      customer.setEmail(email);
-      customer.setAge(age);
-      customerService.update(id, customer);
-      System.out.println("Customer updated successfully.");
-    } else {
-      System.out.println("Customer not found.");
+        customer.setName(name);
+        customer.setEmail(email);
+        customer.setAge(age);
+        customerService.update(id, customer);
+        System.out.println("Customer updated successfully.");
+      } else {
+        System.out.println("Customer not found.");
+      }
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
     }
   }
 
   private void deleteCustomer() {
-    System.out.print("Enter Customer ID: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
+    try {
+      System.out.print("Enter Customer ID: ");
+      int id = scanner.nextInt();
+      scanner.nextLine();
 
-    customerService.delete(id);
-    System.out.println("Customer deleted successfully.");
+      customerService.delete(id);
+      System.out.println("Customer deleted successfully.");
+    } catch (EntityNotFoundException exception) {
+      System.out.println(exception.getMessage());
+    } catch (RuntimeException exception) {
+      System.out.println(exception.getMessage());
+    }
   }
 
 }
