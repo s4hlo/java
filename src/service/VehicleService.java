@@ -5,7 +5,6 @@ import entity.Vehicle;
 
 import java.util.List;
 import java.util.Optional;
-import dao.VehicleDAO;
 
 public class VehicleService {
   private VehicleDAO vehicleDao = new VehicleDAO();
@@ -26,15 +25,15 @@ public class VehicleService {
     return vehicleDao.findAll(vehicle -> !vehicle.isAvailable());
   }
 
-  public String calculatePriceInDays(int id, int days) {
+  public double calculatePriceInDays(int id, int days) {
     Optional<Vehicle> vehicleOptional = vehicleDao.findById(id);
     if (vehicleOptional.isPresent()) {
       Vehicle vehicle = vehicleOptional.get();
       double vehiclePrice = vehicle.getRentalPricePerDay();
-      String price = "Price for " + days + " days is: " + vehiclePrice * days + " $";
-      return price;
+      System.out.println("Price for " + days + " days is: " + vehiclePrice * days + " $");
+      return vehiclePrice * days ;
     } else {
-      return "Vehicle with ID " + id + " not found.";
+      return 0;
     }
   }
 

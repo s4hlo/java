@@ -15,11 +15,11 @@ public class Rental extends Entity {
   private Optional<Customer> customer;
   private Optional<Vehicle> vehicle;
 
-  public Rental(Date startDate, Date endDate, double amountPaid, int customerId, int vehicleId) {
+  public Rental(Date startDate, Date endDate, int customerId, int vehicleId) {
     super(0);
     this.startDate = startDate;
     this.endDate = endDate;
-    this.amountPaid = amountPaid;
+    this.amountPaid = 0;
     this.returnDate = Optional.empty();
     this.customerId = customerId;
     this.vehicleId = vehicleId;

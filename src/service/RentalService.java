@@ -21,6 +21,9 @@ public class RentalService {
     if (vehicle.isPresent()) {
       vehicle.get().setAvailable(false);
       vehicleService.update(vehicle.get().getId(), vehicle.get());
+      int days = (int) ((rental.getEndDate().getTime() - rental.getStartDate().getTime()) / (1000 * 60 * 60 * 24));
+      double amountToPay = vehicleService.calculatePriceInDays(vehicle.get().getId(), days);
+      rental.setAmountPaid(amountToPay);
     }
 
     if (customer.isPresent() && vehicle.isPresent()) {

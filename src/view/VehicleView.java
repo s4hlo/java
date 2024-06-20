@@ -5,7 +5,6 @@ import service.VehicleService;
 
 import java.util.Optional;
 import java.util.Scanner;
-import view.View;
 
 public class VehicleView implements View {
   private VehicleService vehicleService = new VehicleService();

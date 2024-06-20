@@ -78,9 +78,6 @@ public class RentalView implements View {
     System.out.print("Enter Rental EndDate: ");
     // the format should be yyyy-mm-dd
     Date endDate = Date.valueOf(scanner.nextLine());
-    System.out.print("Enter Rental Amount Paid: ");
-    double amountPaid = scanner.nextDouble();
-    scanner.nextLine();
     System.out.print("Enter Rental Customer ID: ");
     int customerId = scanner.nextInt();
     scanner.nextLine();
@@ -88,7 +85,7 @@ public class RentalView implements View {
     int vehicleId = scanner.nextInt();
     scanner.nextLine();
 
-    Rental rental = new Rental(startDate, endDate, amountPaid, customerId, vehicleId);
+    Rental rental = new Rental(startDate, endDate, customerId, vehicleId);
     rentalService.add(rental);
     System.out.println("Rental added successfully.");
   }
