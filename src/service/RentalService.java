@@ -18,6 +18,11 @@ public class RentalService {
     Optional<Customer> customer = customerService.getById(rental.getCustomerId());
     Optional<Vehicle> vehicle = vehicleService.getById(rental.getVehicleId());
 
+    if (vehicle.isPresent()) {
+      vehicle.get().setAvailable(false);
+      vehicleService.update(vehicle.get().getId(), vehicle.get());
+    }
+
     if (customer.isPresent() && vehicle.isPresent()) {
       rental.setCustomer(customer.get());
       rental.setVehicle(vehicle.get());
@@ -30,6 +35,12 @@ public class RentalService {
     Optional<Rental> rental = rentalDao.findById(id);
 
     if (rental.isPresent()) {
+      // Update the vehicle to be available only if vehicle is present
+      if (rental.get().getVehicle().isPresent()) {
+        Vehicle vehicle = rental.get().getVehicle().get();
+        vehicle.setAvailable(true);
+      }
+
       rental.get().setReturnDate(returnDate);
       rentalDao.update(id, rental.get());
     }
@@ -37,12 +48,12 @@ public class RentalService {
 
   public Optional<Rental> getById(int id) {
 
-    Optional<Rental> rental =  rentalDao.findById(id);
+    Optional<Rental> rental = rentalDao.findById(id);
 
     return rental;
   }
 
-  public List<Rental> getAllPendingRentals () {
+  public List<Rental> getAllPendingRentals() {
     return rentalDao.findAll(rental -> !rental.getReturnDate().isPresent());
   }
 
@@ -58,5 +69,3 @@ public class RentalService {
     rentalDao.delete(id);
   }
 }
-
-

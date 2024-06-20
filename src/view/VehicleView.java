@@ -17,9 +17,10 @@ public class VehicleView implements View {
       System.out.println("1. Add Vehicle");
       System.out.println("2. View Vehicle");
       System.out.println("3. View All Vehicles");
-      System.out.println("4. Update Vehicle");
-      System.out.println("5. Delete Vehicle");
-      System.out.println("6. Back to Main Menu");
+      System.out.println("4. View all Available Vehicles");
+      System.out.println("5. Update Vehicle");
+      System.out.println("6. Delete Vehicle");
+      System.out.println("7. Back to Main Menu");
       System.out.print("Enter your choice: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -35,17 +36,24 @@ public class VehicleView implements View {
           viewAllVehicles();
           break;
         case 4:
-          updateVehicle();
+          viewAllAvailableVehicles();
           break;
         case 5:
-          deleteVehicle();
+          updateVehicle();
           break;
         case 6:
+          deleteVehicle();
+          break;
+        case 7:
           return;
         default:
           System.out.println("Invalid choice. Try again.");
       }
     }
+  }
+
+  private void viewAllAvailableVehicles() {
+    vehicleService.getAllAvailableVehicles().forEach(System.out::println);
   }
 
   private void addVehicle() {
