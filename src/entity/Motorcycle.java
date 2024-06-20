@@ -32,7 +32,7 @@ public class Motorcycle extends Vehicle {
     return "Motorcycle{" +
         "type='" + type + '\'' +
         ", engineSize=" + engineSize +
-        "} " + super.toString();
+        "} " + super.toString() + "\n------ \n";
   }
 
 }

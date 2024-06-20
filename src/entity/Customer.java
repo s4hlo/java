@@ -43,7 +43,7 @@ public class Customer extends Entity {
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", age=" + age +
-        '}';
+        '}' + "\n----- \n";
   }
 
 }

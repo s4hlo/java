@@ -101,6 +101,6 @@ public class Rental extends Entity {
         ", vehicleId=" + vehicleId +
         ", customer=" + customer +
         ", vehicle=" + vehicle +
-        '}';
+        '}' + "\n---------------- \n";
   }
 }

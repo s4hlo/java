@@ -42,7 +42,7 @@ public class Car extends Vehicle {
         "numDoors=" + numDoors +
         ", numSeats=" + numSeats +
         ", transmissionType='" + transmissionType + '\'' +
-        "} " + super.toString();
+        "} " + super.toString() + "\n------- \n";
   }
 
 }
