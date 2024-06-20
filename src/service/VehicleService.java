@@ -22,7 +22,7 @@ public class VehicleService {
     return vehicleDao.findAll(vehicle -> vehicle.isAvailable());
   }
 
-  public Lis<Vehicle> getAllRentedVehicles() {
+  public List<Vehicle> getAllRentedVehicles() {
     return vehicleDao.findAll(vehicle -> !vehicle.isAvailable());
   }
 

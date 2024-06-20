@@ -6,11 +6,11 @@ import service.CustomerService;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class CustomerView {
+public class CustomerView implements View {
   private CustomerService customerService = new CustomerService();
   private Scanner scanner = new Scanner(System.in);
 
-  public void showMenu() {
+  public void startView() {
     while (true) {
       System.out.println("1. Add Customer");
       System.out.println("2. View Customer");
