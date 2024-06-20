@@ -1,5 +1,7 @@
 package view;
 
+import entity.Car;
+import entity.Motorcycle;
 import entity.Vehicle;
 import service.VehicleService;
 
@@ -56,6 +58,52 @@ public class VehicleView implements View {
   }
 
   private void addVehicle() {
+    //ask the user if they want to add a car or a motorcycle
+    System.out.println("What type of vehicle do you want to add?");
+    System.out.println("1. Car");
+    System.out.println("2. Motorcycle");
+    System.out.print("Enter your choice: ");
+    while (true) {
+      int choice = scanner.nextInt();
+      scanner.nextLine();
+      switch (choice) {
+        case 1:
+          addCar();
+          return;
+        case 2:
+          addMotorcycle();
+          return;
+        default:
+          System.out.println("Invalid choice. Try again.");
+      }
+    }
+  }
+
+  private void addMotorcycle() {
+    System.out.print("Model: ");
+    String model = scanner.nextLine();
+    System.out.print("Year:");
+    int year = scanner.nextInt();
+    scanner.nextLine();
+    System.out.print("Color:");
+    String color = scanner.nextLine();
+    System.out.print("FuelType:");
+    String fuelType = scanner.nextLine();
+    scanner.nextLine();
+    System.out.print("Rental Price Per Day:");
+    double rentalPricePerDay = scanner.nextDouble();
+    System.out.print("Type:");
+    String type = scanner.nextLine();
+    System.out.print("Engine Size:");
+    int engineSize = scanner.nextInt();
+    scanner.nextLine();
+
+    Vehicle vehicle = new Motorcycle(model, year, color, rentalPricePerDay, fuelType, type, engineSize);
+    vehicleService.add(vehicle);
+    System.out.println("Motorcycle added successfully.");
+  }
+
+  private void addCar() {
     System.out.print("Model: ");
     String model = scanner.nextLine();
     System.out.print("Year:");
@@ -67,10 +115,19 @@ public class VehicleView implements View {
     String fuelType = scanner.nextLine();
     System.out.print("Rental Price Per Day:");
     double rentalPricePerDay = scanner.nextDouble();
+    System.out.print("Number of Doors:");
+    int numberOfDoors = scanner.nextInt();
+    scanner.nextLine();
+    System.out.print("Number of seats:");
+    int numberOfSeats = scanner.nextInt();
+    scanner.nextLine();
+    System.out.print("Transmission Type:");
+    String transmissionType = scanner.nextLine();
 
-    Vehicle vehicle = new Vehicle(model, year, color, rentalPricePerDay, fuelType);
+    Vehicle vehicle = new Car(model, year, color, rentalPricePerDay, fuelType, numberOfDoors, numberOfSeats,
+        transmissionType);
     vehicleService.add(vehicle);
-    System.out.println("Vehicle added successfully.");
+    System.out.println("Car added successfully.");
   }
 
   private void viewVehicle() {
@@ -100,10 +157,12 @@ public class VehicleView implements View {
       String model = scanner.nextLine();
       System.out.print("Enter new year (current: " + vehicle.getYear() + "): ");
       int year = scanner.nextInt();
+      scanner.nextLine();
       System.out.print("Enter new color (current: " + vehicle.getColor() + "): ");
       String color = scanner.nextLine();
       System.out.print("Enter new rental price per day (current: " + vehicle.getRentalPricePerDay() + "): ");
       double rentalPricePerDay = scanner.nextDouble();
+      scanner.nextLine();
       System.out.print("Enter new fuel type (current: " + vehicle.getFuelType() + "): ");
       String fuelType = scanner.nextLine();
 
