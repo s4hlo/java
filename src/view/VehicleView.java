@@ -20,9 +20,10 @@ public class VehicleView implements View {
       System.out.println("2. View Vehicle");
       System.out.println("3. View All Vehicles");
       System.out.println("4. View all Available Vehicles");
-      System.out.println("5. Update Vehicle");
-      System.out.println("6. Delete Vehicle");
-      System.out.println("7. Back to Main Menu");
+      System.out.println("5. View all Vehicles by Price (sorted)");
+      System.out.println("6. Update Vehicle");
+      System.out.println("7. Delete Vehicle");
+      System.out.println("8. Back to Main Menu");
       System.out.print("Enter your choice: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
@@ -41,17 +42,24 @@ public class VehicleView implements View {
           viewAllAvailableVehicles();
           break;
         case 5:
-          updateVehicle();
+          viewAllVehiclesByPrice();
           break;
         case 6:
-          deleteVehicle();
+          updateVehicle();
           break;
         case 7:
+          deleteVehicle();
+          break;
+        case 8:
           return;
         default:
           System.out.println("Invalid choice. Try again.");
       }
     }
+  }
+
+  private void viewAllVehiclesByPrice() {
+    vehicleService.getSortedVehicles().forEach(System.out::println);
   }
 
   private void viewAllAvailableVehicles() {
@@ -157,7 +165,7 @@ public class VehicleView implements View {
       System.out.print("Enter Vehicle ID: ");
       int id = scanner.nextInt();
       scanner.nextLine();
-  
+
       Optional<Vehicle> optionalVehicle = vehicleService.getById(id);
       if (optionalVehicle.isPresent()) {
         Vehicle vehicle = optionalVehicle.get();
@@ -173,7 +181,7 @@ public class VehicleView implements View {
         scanner.nextLine();
         System.out.print("Enter new fuel type (current: " + vehicle.getFuelType() + "): ");
         String fuelType = scanner.nextLine();
-  
+
         vehicle.setModel(model);
         vehicle.setYear(year);
         vehicle.setColor(color);
@@ -196,7 +204,7 @@ public class VehicleView implements View {
       System.out.print("Enter Vehicle ID: ");
       int id = scanner.nextInt();
       scanner.nextLine();
-  
+
       vehicleService.delete(id);
       System.out.println("Vehicle deleted successfully.");
     } catch (EntityNotFoundException exception) {

@@ -21,8 +21,8 @@ public class VehicleService {
     return vehicleDao.findAll(vehicle -> vehicle.isAvailable());
   }
 
-  public List<Vehicle> getAllRentedVehicles() {
-    return vehicleDao.findAll(vehicle -> !vehicle.isAvailable());
+  public List<Vehicle> getSortedVehicles() {
+    return vehicleDao.findAll((v1, v2) -> Double.compare(v1.getRentalPricePerDay(), v2.getRentalPricePerDay()));
   }
 
   public double calculatePriceInDays(int id, int days) {
